@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+
+// Partition function (Lomuto Partition)
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];  // last element as pivot
+    int i = low - 1;        // index of smaller element
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            // swap arr[i] and arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    // place pivot in correct position
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1; // return pivot index
+}
+
+// Quick Sort function
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        // recursive calls
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+// Function to print array
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+
+// Main function
+int main() {
+    int arr[] = {12, 4, 7, 3, 10, 8};
+    int n = sizeof(arr) / sizeof(arr[0]);
