@@ -1,0 +1,81 @@
+#include <iostream>
+#include <unordered_set>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Insert at end
+void insert(Node*& head, int val) {
+    Node* newNode = new Node{val, nullptr};
+    if (!head) {
+        head = newNode;
+        return;
+    }
+    Node* temp = head;
+    while (temp->next)
+        temp = temp->next;
+    temp->next = newNode;
+}
+
+// Remove duplicates and return sum of deleted nodes
+int removeDuplicatesAndSum(Node*& head) {
+    if (!head) return 0;
+
+    unordered_set<int> seen;
+    Node* curr = head;
+    Node* prev = nullptr;
+
+    int sum = 0;
+
+    while (curr) {
+        if (seen.count(curr->data)) {
+            // Duplicate found
+            sum += curr->data;
+
+            prev->next = curr->next;
+            delete curr;
+            curr = prev->next;
+        } else {
+            seen.insert(curr->data);
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+
+    return sum;
+}
+
+// Print list
+void printList(Node* head) {
+    while (head) {
+        cout << head->data << " -> ";
+        head = head->next;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    Node* head = nullptr;
+
+    insert(head, 10);
+    insert(head, 20);
+    insert(head, 10);
+    insert(head, 30);
+    insert(head, 20);
+    insert(head, 40);
+
+    cout << "Original List:\n";
+    printList(head);
+
+    int sum = removeDuplicatesAndSum(head);
+
+    cout << "Updated List:\n";
+    printList(head);
+
+    cout << "Sum of deleted duplicates: " << sum << endl;
+
+    return 0;
+}
