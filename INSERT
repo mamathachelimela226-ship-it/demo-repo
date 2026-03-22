@@ -1,0 +1,60 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+Node* insertAtPosition(Node* head, int value, int position) {
+    Node* newNode = new Node(value);
+
+    if (position == 1) {
+        newNode->next = head;
+        return newNode;
+    }
+
+    Node* current = head;
+    int count = 1;
+
+    while (current != nullptr && count < position - 1) {
+        current = current->next;
+        count++;
+    }
+
+    if (current == nullptr) {
+        delete newNode;
+        return head;
+    }
+
+    newNode->next = current->next;
+    current->next = newNode;
+
+    return head;
+}
+
+void printList(Node* head) {
+    while (head != nullptr) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = new Node(10);
+    head->next = new Node(20);
+    head->next->next = new Node(30);
+
+    head = insertAtPosition(head, 15, 2);
+    head = insertAtPosition(head, 5, 1);
+    head = insertAtPosition(head, 40, 6);
+
+    printList(head);
+
+    return 0;
+}
