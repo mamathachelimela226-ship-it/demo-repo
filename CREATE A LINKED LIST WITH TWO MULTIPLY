@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node(int value) {
+        data = value;
+        next = nullptr;
+    }
+};
+
+Node* multiplyByTwo(Node* head) {
+    if (head == nullptr)
+        return nullptr;
+
+    Node* newHead = nullptr;
+    Node* newTail = nullptr;
+    Node* current = head;
+
+    while (current != nullptr) {
+        Node* newNode = new Node(current->data * 2);
+
+        if (newHead == nullptr) {
+            newHead = newNode;
+            newTail = newNode;
+        } else {
+            newTail->next = newNode;
+            newTail = newNode;
+        }
+
+        current = current->next;
+    }
+
+    return newHead;
+}
+
+void printList(Node* head) {
+    while (head != nullptr) {
+        cout << head->data << " ";
+        head = head->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    Node* head = new Node(5);
+    head->next = new Node(10);
+    head->next->next = new Node(15);
+
+    Node* newHead = multiplyByTwo(head);
+
+    printList(newHead);
+
+    return 0;
+}
