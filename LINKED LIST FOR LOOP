@@ -1,0 +1,81 @@
+#include<iostream>
+using namespace std;
+struct Node
+{
+	int data;
+	Node *next;
+};
+class Linkedlist{
+	private:
+		Node *head;
+	public:
+		Linkedlist()
+		{
+			head=NULL;
+		}
+		void insertAtEnd(int val)
+		{
+			Node*newnode=new Node();
+			newnode->data=val;
+			newnode->next=NULL;
+			if(head==NULL)
+			{
+				head=newnode;
+			}
+			else{
+			
+			Node* temp=head;
+			while(temp->next!=NULL)
+			{
+				temp=temp->next;
+				
+			}
+			temp->next=newnode;}
+		}
+		void display()
+		
+		{
+			Node* temp=head;
+			while(temp!=NULL)
+			{
+				cout<<temp->data<<"->";
+				temp=temp->next;
+			}
+			cout<<"NULL";
+		}
+		void reverse()
+		{
+			
+				Node*prev=NULL;
+				Node*next=NULL;
+				for(Node*current=head;current!=NULL;)
+					{
+						next=current->next;
+						current->next=prev;
+						prev=current;
+						current=next;
+					}
+					head=prev;
+			}
+	
+				
+				
+			
+			
+		
+};
+int main()
+{
+	Linkedlist list;
+	int n,val,key;
+	cout<<"Enter number of newnodes to be created";
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		cin>>val;
+		list.insertAtEnd(val);
+	}
+	list.display();
+	list.reverse();
+	list.display();
+}
