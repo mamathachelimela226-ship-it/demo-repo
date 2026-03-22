@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+// Insert at end
+void insert(Node*& head, int val) {
+    Node* newNode = new Node{val, nullptr};
+    if (!head) {
+        head = newNode;
+        return;
+    }
+    Node* temp = head;
+    while (temp->next)
+        temp = temp->next;
+    temp->next = newNode;
+}
+
+// Reverse till a given value
+Node* reverseTillValue(Node* head, int key) {
+    if (!head) return nullptr;
+
+    Node* prev = nullptr;
+    Node* curr = head;
+    Node* next = nullptr;
+
+    // Reverse until key is found
+    while (curr && curr->data != key) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    // If key not found, return fully reversed list
+    if (!curr) return prev;
+
+    // Connect original head to remaining list
+    head->next = curr;
+
+    return prev; // new head
+}
+
+// Print list
+void printList(Node* head) {
+    while (head) {
+        cout << head->data << " -> ";
+        head = head->next;
+    }
+    cout << "NULL\n";
+}
+
+int main() {
+    Node* head = nullptr;
+
+    insert(head, 10);
+    insert(head, 20);
+    insert(head, 30);
+    insert(head, 40);
+    insert(head, 50);
+
+    cout << "Original List:\n";
+    printList(head);
+
+    head = reverseTillValue(head, 40);
+
+    cout << "After reversing till 40:\n";
+    printList(head);
+
+    return 0;
+}
