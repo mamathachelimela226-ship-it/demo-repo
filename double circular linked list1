@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+// Function to insert at beginning
+void insertAtBeginning(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    // Case 1: Empty list
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    }
+    // Case 2: Non-empty list
+    else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
