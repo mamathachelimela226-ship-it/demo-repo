@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* head = NULL;
+
+// Function to delete from end
+void deleteEnd() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    // Only one node
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+        return;
+    }
+
+    Node* temp = head;
+    Node* prev = NULL;
+
+    // Traverse to last node
+    while (temp->next != head) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // Remove last node
+    prev->next = head;
+    delete temp;
+}
+
+// Function to display list
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "(head)\n";
+}
