@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+// Insert at beginning
+void insertAtBeginning(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
+
+        tail->next = newNode;
+        head->prev = newNode;
+
+        head = newNode;
+    }
+}
+
+// Insert at specific position
+void insertAtPosition(int value, int pos) {
+    if (pos <= 0) {
+        cout << "Invalid position\n";
+        return;
+    }
+
+    // If inserting at beginning
+    if (pos == 1) {
+        insertAtBeginning(value);
+        return;
+    }
+
+    Node* temp = head;
+
+    // Traverse to (pos - 1) node
+    for (int i = 1; i < pos - 1 && temp->next != head; i++) {
+        temp = temp->next;
+    }
+
+    // If position is beyond length+1
+    if (temp->next == head && pos > 2) {
+        cout << "Position out of range\n";
+        return;
+    }
+
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    Node* nextNode = temp->next;
+
+    newNode->next = nextNode;
+    newNode->prev = temp;
+
+    temp->next = newNode;
+    nextNode->prev = newNode;
+}
+
+// Display function
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " <-> ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "(back to head)\n";
+}
+
+int main() {
+    insertAtBeginning(10);
+    insertAtBeginning(20);
+    insertAtBeginning(30);
+
+    cout << "Original List:\n";
+    display();
+
+    insertAtPosition(25, 2);
+
+    cout << "After inserting 25 at position 2:\n";
+    display();
+
+    return 0;
+}
