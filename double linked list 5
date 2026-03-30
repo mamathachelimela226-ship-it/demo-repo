@@ -1,0 +1,67 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+// Insert at end (helper function)
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    } else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
+
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+
+// Delete from beginning
+void deleteFromBeginning() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    // Only one node
+    if (head->next == head) {
+        delete head;
+        head = NULL;
+    }
+    else {
+        Node* tail = head->prev;
+        Node* temp = head;
+
+        head = head->next;
+        tail->next = head;
+        head->prev = tail;
+
+        delete temp;
+    }
+}
+
+// Display function
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " <-> ";
+        temp = temp->next;
+    } while (temp
