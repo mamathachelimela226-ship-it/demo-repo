@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+    Node* prev;
+};
+
+Node* head = NULL;
+
+// Function to insert at end
+void insertAtEnd(int value) {
+    Node* newNode = new Node();
+    newNode->data = value;
+
+    // Case 1: Empty list
+    if (head == NULL) {
+        newNode->next = newNode;
+        newNode->prev = newNode;
+        head = newNode;
+    }
+    // Case 2: Non-empty list
+    else {
+        Node* tail = head->prev;
+
+        newNode->next = head;
+        newNode->prev = tail;
+
+        tail->next = newNode;
+        head->prev = newNode;
+    }
+}
+
+// Function to display list
+void display() {
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return;
+    }
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " <-> ";
+        temp = temp->next;
+    } while (temp != head);
+
+    cout << "(back to head)\n";
+}
+
+int main() {
+    insertAtEnd(10);
+    insertAtEnd(20);
+    insertAtEnd(30);
+
+    cout << "Doubly Circu
