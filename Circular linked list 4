@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node* next;
+};
+
+Node* deleteFromBeginning(Node* head) {
+    // Case 1: Empty list
+    if (head == NULL) {
+        cout << "List is empty\n";
+        return NULL;
+    }
+
+    // Case 2: Only one node
+    if (head->next == head) {
+        delete head;
+        return NULL;
+    }
+
+    // Case 3: More than one node
+    Node* temp = head;
+    Node* last = head;
+
+    // Find last node
+    while (last->next != head) {
+        last = last->next;
+    }
+
+    // Move head
+    head = head->next;
+
+    // Update last node link
+    last->next = head;
+
+    // Delete old head
+    delete temp;
+
+    return head;
+}
+
+// Function to display list
+void display(Node* head) {
+    if (head == NULL) return;
+
+    Node* temp = head;
+    do {
+        cout << temp->data << " -> ";
+        temp = temp->next;
+    } while (temp != head);
+    cout << "(head)\n";
+}
