@@ -1,0 +1,87 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+class Node {
+public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = right = NULL;
+    }
+};
+
+Node* insert(Node* root, int value) {
+
+    Node* newNode = new Node(value);
+
+    if (root == NULL)
+        return newNode;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+
+        Node* temp = q.front();
+        q.pop();
+
+        if (temp->left == NULL) {
+            temp->left = newNode;
+            return root;
+        }
+        else
+            q.push(temp->left);
+
+        if (temp->right == NULL) {
+            temp->right = newNode;
+            return root;
+        }
+        else
+            q.push(temp->right);
+    }
+
+    return root;
+}
+
+void levelOrder(Node* root) {
+
+    if (root == NULL)
+        return;
+
+    queue<Node*> q;
+    q.push(root);
+
+    while (!q.empty()) {
+
+        Node* temp = q.front();
+        q.pop();
+
+        cout << temp->data << " ";
+
+        if (temp->left)
+            q.push(temp->left);
+
+        if (temp->right)
+            q.push(temp->right);
+    }
+}
+
+int main() {
+
+    Node* root = NULL;
+
+    root = insert(root, 10);
+    root = insert(root, 20);
+    root = insert(root, 30);
+    root = insert(root, 40);
+    root = insert(root, 50);
+
+    cout << "Level Order Traversal:\n";
+    levelOrder(root);
+
+    return 0;
+}
